@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import api from "@/service/axios";
+import { setIsAuth, setUser } from "@/service/redux/reducers/authSlice";
 import { useAppDispatch } from "@/service/redux/store";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const FormAuth = () => {
@@ -13,7 +15,7 @@ export const FormAuth = () => {
   const [pass, setPass] = useState("");
   const { toast } = useToast();
   const dispatch = useAppDispatch();
-
+  const router = useRouter();
   const handleSingIn = async (e: any) => {
     e.preventDefault();
     if ((!email && !pass) || !email || !pass) {
@@ -27,7 +29,15 @@ export const FormAuth = () => {
           email: email,
           password: pass,
         });
-        console.log("res: ", res);
+        dispatch(setIsAuth(true));
+        dispatch(
+          setUser({
+            access_token: res.data.accessToken,
+            login: email,
+            refresh_token: res.data.refreshToken,
+          })
+        );
+        router.push("/");
       } catch (error) {
         console.error(error);
       }
