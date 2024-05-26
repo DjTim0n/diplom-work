@@ -9,6 +9,7 @@ import { useAppDispatch } from "@/service/redux/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { DialogAuth } from "./Dialog";
 
 export const FormAuth = () => {
   const [email, setEmail] = useState("");
@@ -39,6 +40,10 @@ export const FormAuth = () => {
         );
         router.push("/");
       } catch (error) {
+        toast({
+          title: "Error",
+          description: `${error}`,
+        });
         console.error(error);
       }
     }
@@ -76,6 +81,8 @@ export const FormAuth = () => {
       >
         Войти
       </Button>
+
+      <DialogAuth />
     </>
   );
 };

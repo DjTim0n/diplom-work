@@ -11,6 +11,8 @@ import { useState } from "react";
 export const FormReg = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const { toast } = useToast();
   const dispatch = useAppDispatch();
 
@@ -26,9 +28,15 @@ export const FormReg = () => {
         const res = await api.post("/Auth/Register", {
           email: email,
           password: pass,
+          firstName: firstName,
+          lastName: lastName,
         });
         console.log("res: ", res);
       } catch (error) {
+        toast({
+          title: "Error",
+          description: `${error}`,
+        });
         console.error(error);
       }
     }
@@ -36,6 +44,22 @@ export const FormReg = () => {
 
   return (
     <>
+      <Input
+        placeholder="First name"
+        type="text"
+        value={firstName}
+        onChange={(e) => {
+          setFirstName(e.target.value);
+        }}
+      />
+      <Input
+        placeholder="Last name"
+        type="text"
+        value={lastName}
+        onChange={(e) => {
+          setLastName(e.target.value);
+        }}
+      />
       <Input
         placeholder="Email"
         type="email"

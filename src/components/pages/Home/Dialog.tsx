@@ -24,13 +24,15 @@ import { useAppSelector } from "@/service/redux/store";
 export const DialogEditProfile = ({ userData }: { userData?: any }) => {
   console.log("🚀 ~ DialogEditProfile ~ userData:", userData);
   const access_token = useAppSelector((state) => state.auth.user?.access_token);
-  const [name, setName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [userIdentity, setUserIdentity] = useState<string>("");
 
   useEffect(() => {
     if (userData) {
-      setName(userData.name);
+      setFirstName(userData.firstName);
+      setLastName(userData.lastName);
       setDescription(userData.description);
       setUserIdentity(userData.userIdentity);
     }
@@ -43,7 +45,8 @@ export const DialogEditProfile = ({ userData }: { userData?: any }) => {
       const res = await api.put(
         "/Profile",
         {
-          name: name,
+          firstName: firstName,
+          lastName: lastName,
           description: description,
           userIdentity: userIdentity,
         },
@@ -68,12 +71,24 @@ export const DialogEditProfile = ({ userData }: { userData?: any }) => {
           </DialogHeader>
           <div className="flex items-center space-x-2">
             <div className="grid flex-1 gap-2">
-              <Label htmlFor="link">Name</Label>
+              <Label htmlFor="link">First Name</Label>
               <Input
                 id="link"
-                value={name}
+                value={firstName}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setFirstName(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="grid flex-1 gap-2">
+              <Label htmlFor="link">Last Name</Label>
+              <Input
+                id="link"
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
                 }}
               />
             </div>

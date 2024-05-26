@@ -1,7 +1,9 @@
 import axios from "axios";
+const localhostBaseUrl = "http://localhost:8080";
+const baseURL = "https://backend.tim-space.shop";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
   },

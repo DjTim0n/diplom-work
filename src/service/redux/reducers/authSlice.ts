@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface IUser {
-  login: string;
+  login?: string;
   access_token: string;
   refresh_token: string;
 }
