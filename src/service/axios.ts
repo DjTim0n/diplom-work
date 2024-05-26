@@ -3,7 +3,7 @@ const localhostBaseUrl = "http://localhost:8080";
 const baseURL = "https://backend.tim-space.shop";
 
 const api = axios.create({
-  baseURL: baseURL,
+  baseURL: localhostBaseUrl,
   headers: {
     "Content-Type": "application/json",
   },
