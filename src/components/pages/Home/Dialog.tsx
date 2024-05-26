@@ -15,12 +15,6 @@ import { useEffect, useState } from "react";
 import api from "@/service/axios";
 import { useAppSelector } from "@/service/redux/store";
 
-// name: '',
-// description: '',
-// userIdentity: '',
-// signature: '',
-// isVerify: true,
-
 export const DialogEditProfile = ({ userData }: { userData?: any }) => {
   console.log("🚀 ~ DialogEditProfile ~ userData:", userData);
   const access_token = useAppSelector((state) => state.auth.user?.access_token);
@@ -56,6 +50,9 @@ export const DialogEditProfile = ({ userData }: { userData?: any }) => {
           },
         }
       );
+      if (res.status === 204) {
+        alert("Успешно сохранено");
+      }
     } catch (error) {}
   };
 
@@ -71,7 +68,7 @@ export const DialogEditProfile = ({ userData }: { userData?: any }) => {
           </DialogHeader>
           <div className="flex items-center space-x-2">
             <div className="grid flex-1 gap-2">
-              <Label htmlFor="link">First Name</Label>
+              <Label htmlFor="link">Имя</Label>
               <Input
                 id="link"
                 value={firstName}
@@ -83,7 +80,7 @@ export const DialogEditProfile = ({ userData }: { userData?: any }) => {
           </div>
           <div className="flex items-center space-x-2">
             <div className="grid flex-1 gap-2">
-              <Label htmlFor="link">Last Name</Label>
+              <Label htmlFor="link">Фамилия</Label>
               <Input
                 id="link"
                 value={lastName}
@@ -95,7 +92,7 @@ export const DialogEditProfile = ({ userData }: { userData?: any }) => {
           </div>
           <div className="flex items-center space-x-2">
             <div className="grid flex-1 gap-2">
-              <Label htmlFor="link">description</Label>
+              <Label htmlFor="link">О себе</Label>
               <Input
                 id="link"
                 value={description}
@@ -107,7 +104,7 @@ export const DialogEditProfile = ({ userData }: { userData?: any }) => {
           </div>
           <div className="flex items-center space-x-2">
             <div className="grid flex-1 gap-2">
-              <Label htmlFor="link">userIdentity</Label>
+              <Label htmlFor="link">ИИН</Label>
               <Input
                 id="link"
                 value={userIdentity}
@@ -118,14 +115,15 @@ export const DialogEditProfile = ({ userData }: { userData?: any }) => {
             </div>
           </div>
           <DialogFooter className="sm:justify-start">
+            <Button
+              type="button"
+              onClick={(e) => handleSaveProfile(e)}
+              variant="secondary"
+            >
+              Сохранить
+            </Button>
             <DialogClose asChild>
-              <Button
-                type="button"
-                onClick={(e) => handleSaveProfile(e)}
-                variant="secondary"
-              >
-                Save
-              </Button>
+              <Button variant="secondary">Закрыть</Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>

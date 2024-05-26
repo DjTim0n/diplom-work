@@ -6,6 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import api from "@/service/axios";
 import { useAppDispatch } from "@/service/redux/store";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export const FormReg = () => {
@@ -15,7 +16,7 @@ export const FormReg = () => {
   const [lastName, setLastName] = useState("");
   const { toast } = useToast();
   const dispatch = useAppDispatch();
-
+  const router = useRouter();
   const handleSingIn = async (e: any) => {
     e.preventDefault();
     if ((!email && !pass) || !email || !pass) {
@@ -31,7 +32,16 @@ export const FormReg = () => {
           firstName: firstName,
           lastName: lastName,
         });
-        console.log("res: ", res);
+        if (res.status === 200) {
+          toast({
+            title: "Подтверждения",
+            description:
+              "На вашу почту поступило письмо. Перейдите по ссылке в письме чтобы подтвердить почту.",
+          });
+          setTimeout(() => {
+            router.push("/auth");
+          }, 5000);
+        }
       } catch (error) {
         toast({
           title: "Error",
@@ -45,7 +55,7 @@ export const FormReg = () => {
   return (
     <>
       <Input
-        placeholder="First name"
+        placeholder="Имя"
         type="text"
         value={firstName}
         onChange={(e) => {
@@ -53,7 +63,7 @@ export const FormReg = () => {
         }}
       />
       <Input
-        placeholder="Last name"
+        placeholder="Фамилия"
         type="text"
         value={lastName}
         onChange={(e) => {
@@ -69,7 +79,7 @@ export const FormReg = () => {
         }}
       />
       <Input
-        placeholder="Password"
+        placeholder="Пароль"
         type="password"
         value={pass}
         onChange={(e) => {

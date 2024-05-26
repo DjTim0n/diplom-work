@@ -44,6 +44,9 @@ export const DialogAuth = () => {
                 dispatch(setIsAuth(true));
                 router.push("/");
               }
+            })
+            .catch((res) => {
+              alert("Ключ устарел.");
             });
         } catch (error) {
           console.error(error);

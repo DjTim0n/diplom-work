@@ -9,6 +9,7 @@ import { DialogEditProfile } from "./Dialog";
 import api from "@/service/axios";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast";
 export const HomePage = () => {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
   const dispatch = useAppDispatch();
@@ -18,6 +19,8 @@ export const HomePage = () => {
   const [isClient, setIsClient] = useState(false);
   const [userData, setUserData] = useState<any>(null);
   const [test, setTest] = useState("");
+  const { toast } = useToast();
+
   useEffect(() => {
     setIsClient(true);
     if (!isAuth) {
@@ -72,6 +75,14 @@ export const HomePage = () => {
           console.log(url);
           window.open(url, "_blank");
           setTest(url);
+        })
+        .catch((response) => {
+          alert("Заполните ИИН в профиле чтобы выпустить ЭЦП");
+          toast({
+            title: "Заполните профиль!",
+            description: "Заполните поле ИИН в профиле чтобы выпустить ЭЦП",
+          });
+          console.log("test:", response);
         });
     } catch (error) {
       console.error(error);
@@ -103,9 +114,9 @@ export const HomePage = () => {
     <>
       <div className="container flex flex-col items-center">
         {userData ? (
-          <h1>Hello {userData?.firstName}</h1>
+          <h1>Привет, {userData?.firstName}!</h1>
         ) : (
-          <h1>Hello Unnamed</h1>
+          <h1>Привет, Unnamed!</h1>
         )}
         <div className="container flex flex-col items-center m-2 gap-4">
           <DialogEditProfile userData={userData} />
